@@ -1,0 +1,68 @@
+</label>
+      <input
+        type="range"
+        min="-180"
+        max="180"
+        step="1"
+        ng-model="rotate"
+        class="w-full"
+      />
+    </div>
+  </div>
+  
+  <div class="flex justify-between mb-4">
+    <button
+      ng-click="flipHorizontal = !flipHorizontal"
+      class="flex items-center px-3 py-2 rounded-lg"
+      ng-class="{
+        'bg-blue-100 text-blue-700': flipHorizontal,
+        'bg-gray-100 text-gray-700': !flipHorizontal
+      }"
+    >
+      <svg class="w-5 h-5 mr-2 icon icon-sm" viewBox="0 0 24 24">
+        <path d="M9 2v20"></path>
+        <path d="M15 4v16"></path>
+        <path d="M5 9h14"></path>
+        <path d="M5 15h14"></path>
+      </svg>
+      Flip Horizontal
+    </button>
+    <button
+      ng-click="flipVertical = !flipVertical"
+      class="flex items-center px-3 py-2 rounded-lg"
+      ng-class="{
+        'bg-blue-100 text-blue-700': flipVertical,
+        'bg-gray-100 text-gray-700': !flipVertical
+      }"
+    >
+      <svg class="w-5 h-5 mr-2 icon icon-sm" viewBox="0 0 24 24">
+        <path d="M2 9h20"></path>
+        <path d="M4 15h16"></path>
+        <path d="M9 5v14"></path>
+        <path d="M15 5v14"></path>
+      </svg>
+      Flip Vertical
+    </button>
+  </div>
+  
+  <div class="crop-buttons">
+    <button
+      ng-click="onCancelCrop()"
+      class="btn btn-secondary"
+    >
+      Cancel
+    </button>
+    <button
+      ng-click="onApplyCrop()"
+      class="btn btn-primary"
+    >
+      Apply Crop
+    </button>
+  </div>
+  
+  <div ng-if="isExternalImage" class="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+    <p class="text-sm text-yellow-700">
+      Note: This image is from an external source. Some advanced editing features may be limited.
+    </p>
+  </div>
+</div>

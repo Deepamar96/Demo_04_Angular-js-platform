@@ -1,0 +1,307 @@
+<div class="min-h-screen bg-gray-50 py-8 px-4">
+  <div class="max-w-7xl mx-auto">
+    <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">
+      Religious Art Customization
+    </h1>
+
+    <!-- Categories -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+      <h2 class="text-xl font-semibold mb-4 text-gray-700">Select Category</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <button
+          ng-repeat="category in vm.categories"
+          ng-click="vm.openCategoryPage(category)"
+          class="p-3 rounded-lg text-sm transition-colors"
+          ng-class="{
+            'bg-blue-500 text-white': vm.selectedCategory === category,
+            'bg-gray-100 hover:bg-gray-200 text-gray-700': vm.selectedCategory !== category
+          }"
+        >
+          {{ category }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Upload Section -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+      <h2 class="text-xl font-semibold mb-4 text-gray-700">Upload Images</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Main Image Upload -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            Main Image
+          </label>
+          <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
+            <div class="space-y-1 text-center">
+              <svg class="mx-auto h-12 w-12 text-gray-400 icon icon-lg" viewBox="0 0 24 24">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              <div class="flex text-sm text-gray-600">
+                <label
+                  for="main-image"
+                  class="relative cursor-pointer rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500"
+                >
+                  <span>Upload main image</span>
+                  <input
+                    id="main-image"
+                    type="file"
+                    class="sr-only"
+                    accept="image/*"
+                    onchange="angular.element(this).scope().vm.handleMainImageUpload(event)"
+                  />
+                </label>
+              </div>
+              <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Background Image Upload -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            Background Image (Optional)
+          </label>
+          <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
+            <div class="space-y-1 text-center">
+              <svg class="mx-auto h-12 w-12 text-gray-400 icon icon-lg" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+              <div class="flex text-sm text-gray-600">
+                <label
+                  for="bg-image"
+                  class="relative cursor-pointer rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500"
+                >
+                  <span>Upload background</span>
+                  <input
+                    id="bg-image"
+                    type="file"
+                    class="sr-only"
+                    accept="image/*"
+                    onchange="angular.element(this).scope().vm.handleBgImageUpload(event)"
+                  />
+                </label>
+              </div>
+              <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Size Selection -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+      <h2 class="text-xl font-semibold mb-4 text-gray-700">Select Size</h2>
+      
+      <!-- Orientation Radio Buttons -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+          Orientation
+        </label>
+        <div class="flex gap-4">
+          <label class="flex items-center">
+            <input
+              type="radio"
+              name="orientation"
+              value="landscape"
+              ng-model="vm.orientation"
+              ng-change="vm.setOrientation('landscape')"
+              class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+            />
+            <span class="ml-2 text-gray-700 capitalize">Landscape</span>
+          </label>
+          <label class="flex items-center">
+            <input
+              type="radio"
+              name="orientation"
+              value="portrait"
+              ng-model="vm.orientation"
+              ng-change="vm.setOrientation('portrait')"
+              class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+            />
+            <span class="ml-2 text-gray-700 capitalize">Portrait</span>
+          </label>
+          <label class="flex items-center">
+            <input
+              type="radio"
+              name="orientation"
+              value="square"
+              ng-model="vm.orientation"
+              ng-change="vm.setOrientation('square')"
+              class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+            />
+            <span class="ml-2 text-gray-700 capitalize">Square</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Size Dropdown -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+          Print Size
+        </label>
+        <select
+          ng-model="vm.selectedSize"
+          class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+        >
+          <option value="">Select a size</option>
+          <option 
+            ng-repeat="size in vm.orientation === 'landscape' ? vm.landscapeSizes : (vm.orientation === 'portrait' ? vm.portraitSizes : vm.squareSizes)" 
+            value="{{ size.value }}"
+          >
+            {{ size.label }} - ${{ size.price.toFixed(2) }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="grid grid-cols-12 gap-6">
+      <!-- Background Images Scroll Bar -->
+      <div class="col-span-2 bg-white rounded-lg shadow-md p-4 max-h-[600px] overflow-y-auto">
+        <h3 class="text-lg font-semibold mb-4">Backgrounds</h3>
+        <div class="space-y-4">
+          <div
+            ng-repeat="bgImg in vm.backgroundImages track by $index"
+            ng-click="vm.setBgImage(bgImg)"
+            class="bg-option"
+            ng-class="{ 'selected': bgImg === vm.bgImage }"
+          >
+            <img ng-src="{{ bgImg }}" alt="Background {{ $index + 1 }}" class="w-full h-24 object-cover" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview Section -->
+      <div class="col-span-8 bg-white rounded-lg shadow-md p-4">
+        <div class="relative">
+          <div ng-if="vm.mainImage" class="absolute top-4 right-4 z-10 flex space-x-2">
+            <button
+              ng-click="vm.openCropDialog()"
+              class="bg-white rounded-full p-2 shadow-md"
+              title="Crop Image"
+            >
+              <svg class="w-6 h-6 icon" viewBox="0 0 24 24">
+                <path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"></path>
+                <path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"></path>
+              </svg>
+            </button>
+          </div>
+          
+          <div class="preview-container">
+            <img ng-if="vm.bgImage" ng-src="{{ vm.bgImage }}" alt="Background" class="preview-bg" />
+            
+            <div ng-if="vm.showCrop && vm.mainImage">
+              <image-crop
+                main-image="vm.mainImage"
+                original-image="vm.originalImage"
+                selected-size="vm.selectedSize"
+                orientation="vm.orientation"
+                on-apply-crop="vm.handleApplyCrop()"
+                on-cancel-crop="vm.closeCropDialog()"
+              ></image-crop>
+            </div>
+            
+            <div ng-if="!vm.showCrop && vm.mainImage" class="relative flex items-center justify-center overflow-hidden">
+              <div ng-if="vm.selectedSize" 
+                class="preview-frame"
+                ng-style="{
+                  width: vm.getCurrentSizeOption().width + 'px',
+                  height: vm.getCurrentSizeOption().height + 'px',
+                  border: vm.getSelectedFrameStyle() ? 
+                    vm.getBorderSize() + 'px solid ' + vm.getSelectedFrameStyle().borderColor : 
+                    'none'
+                }"
+              >
+                <img
+                  ng-src="{{ vm.mainImage }}"
+                  alt="Main"
+                  class="preview-image"
+                />
+              </div>
+              <div ng-if="!vm.selectedSize" class="text-center p-8">
+                <p class="text-gray-600 mb-4">Please select a size to see the image in proper dimensions</p>
+                <img
+                  ng-src="{{ vm.mainImage }}"
+                  alt="Main"
+                  class="max-w-md max-h-md object-contain mx-auto"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Frames Scroll Bar -->
+      <div class="col-span-2 bg-white rounded-lg shadow-md p-4 max-h-[600px] overflow-y-auto">
+        <h3 class="text-lg font-semibold mb-4">Frames</h3>
+        <div class="space-y-4">
+          <div
+            ng-repeat="frame in vm.frames"
+            ng-click="vm.setSelectedFrame(frame.id)"
+            class="frame-option"
+            ng-class="{ 'selected': frame.id === vm.selectedFrame }"
+          >
+            <div class="w-full h-24 relative">
+              <img ng-src="{{ frame.url }}" alt="{{ frame.title }}" class="w-full h-full object-cover" />
+              <div
+                class="absolute inset-0"
+                style="border: 10px solid {{ frame.borderColor }}"
+              ></div>
+            </div>
+            <p class="text-sm text-gray-600 mt-1">{{ frame.title }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Information Section -->
+    <div ng-if="vm.mainImage || vm.selectedFrame || vm.selectedSize" class="bg-white rounded-lg shadow-md p-6 mt-6">
+      <h2 class="text-xl font-semibold mb-4 text-gray-700">Selected Options</h2>
+      <div class="grid grid-cols-3 gap-6">
+        <div ng-if="vm.mainImage">
+          <h3 class="text-sm font-medium text-gray-700 mb-2">Main Image</h3>
+          <img ng-src="{{ vm.mainImage }}" alt="Selected main" class="w-24 h-24 object-cover rounded-lg" />
+        </div>
+        <div ng-if="vm.selectedFrame">
+          <h3 class="text-sm font-medium text-gray-700 mb-2">Selected Frame</h3>
+          <div class="relative w-24 h-24">
+            <img
+              ng-src="{{ vm.getSelectedFrameStyle().url }}"
+              alt="Selected frame"
+              class="w-full h-full object-cover rounded-lg"
+            />
+            <div
+              class="absolute inset-0 rounded-lg"
+              style="border: 5px solid {{ vm.getSelectedFrameStyle().borderColor }}"
+            ></div>
+          </div>
+        </div>
+        <div ng-if="vm.selectedSize">
+          <h3 class="text-sm font-medium text-gray-700 mb-2">Selected Size</h3>
+          <p class="text-lg font-semibold text-gray-900">
+            {{ vm.getCurrentSizeOption().label }}
+          </p>
+          <p class="text-sm text-gray-600">
+            Resolution: {{ vm.getCurrentSizeOption().width }} × {{ vm.getCurrentSizeOption().height }}px
+          </p>
+          <p class="text-sm font-medium text-blue-600 mt-1">
+            ${{ vm.getCurrentSizeOption().price.toFixed(2) }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Page Modal -->
+    <category-page
+      ng-if="vm.showCategoryPage && vm.selectedCategory && vm.categoryImages[vm.selectedCategory]"
+      category="vm.selectedCategory"
+      images="vm.categoryImages[vm.selectedCategory]"
+      on-close="vm.closeCategoryPage()"
+      on-select-image="vm.handleCategoryImageSelect(imageUrl)"
+    ></category-page>
+  </div>
+</div>
